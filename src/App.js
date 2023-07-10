@@ -1,14 +1,9 @@
 import './App.css';
 import React, { useEffect, useState, fetchData  } from 'react';
 
-
-
-
 function App() {
 
 const refresh = () => window.location.reload(true);
-  
-
 
 const buttonTextItems = [
  'Oh What a relief it is',
@@ -58,20 +53,10 @@ let timeInSecs = gameState.endTime /1000;
 
 
 
-
-
-
-
-
  const  chooseSnippet = (index) => {
 setSnippet(buttonTextItems[index]);
  setGameState({ ...gameState, startTime:new Date().getTime()});
  }
-
-
-
-
-
 
   return (
     <div>
@@ -83,23 +68,10 @@ setSnippet(buttonTextItems[index]);
        </div>
        <div>{snippet} </div>
        <input value ={userText} onChange={updateUserText}/> 
-    
        <h4>{gameState.victory ? `You Win: ${timeInSecs} Secs`: "You Suck"}</h4>
      <button onClick ={refresh}>Play Again</button>
-     
         </div>
-
-
-
-
-
-
-
-
-
   );
 };
-
-
 
 export default App; 
