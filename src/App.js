@@ -27,14 +27,7 @@ const [films,setFilms] = useState([]);
 
 ////////////////////////////////
 
-
-
-
-
-
-
-
-  const updateUserText = (event) => {
+const updateUserText = (event) => {
 setUserText(event.target.value);
 
 if(event.target.value === snippet){
@@ -45,18 +38,49 @@ setGameState({
 });
 
  }
+setUserText('')
   };
 
 
+ const  chooseSnippet = (index) => {
+setSnippet(buttonTextItems[index]);
+ setGameState({ ...initialgameState, startTime:new Date().getTime() });
+ }
+
+
+
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch("https://ghibliapi.vercel.app/films?limit=3");
+      const filmsData = await response.json();
+      
+      setFilms(filmsData);
+    } catch (err) {
+       setHasError(true)
+    }
+  }
+ 
+useEffect(() => {
+  document.title = gameState.victory ? 'Victory' : '';
+  setWins(wins +1);
+  }, [gameState.victory,wins] 
+ 
+  )
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  
 let timeInSecs = gameState.endTime /1000;
 
 
 
 
- const  chooseSnippet = (index) => {
-setSnippet(buttonTextItems[index]);
- setGameState({ ...gameState, startTime:new Date().getTime()});
- }
+
+
+
+
 
   return (
     <div>
@@ -68,7 +92,7 @@ setSnippet(buttonTextItems[index]);
        </div>
        <div>{snippet} </div>
        <input value ={userText} onChange={updateUserText}/> 
-       <h4>{gameState.victory ? `You Win: ${timeInSecs} Secs`: "You Suck"}</h4>
+       <h4>{gameState.victory ? `You Win: ${timeInSecs} Secs`: "Hurry Hurry"}</h4>
      <button onClick ={refresh}>Play Again</button>
         </div>
   );
